@@ -36,6 +36,7 @@ public class ModelManager : IModelService
         // business rules
         _modelBusinessRules.CheckIfModelNameExists(request.Name);
         _modelBusinessRules.CheckIfModelYearShouldBeInLast20Years(request.Year);
+        _modelBusinessRules.CheckIfBrandExists(request.BrandId);
 
         // mapping
         var modelToAdd = _mapper.Map<Model>(request);
@@ -94,6 +95,7 @@ public class ModelManager : IModelService
         Model? modelToUpdate = _modelDal.Get(predicate: model => model.Id == request.Id); // 0x123123
         _modelBusinessRules.CheckIfModelExists(modelToUpdate);
         _modelBusinessRules.CheckIfModelYearShouldBeInLast20Years(request.Year);
+        _modelBusinessRules.CheckIfBrandExists(request.BrandId);
 
         modelToUpdate = _mapper.Map(request, modelToUpdate); // 0x123123
         Model updatedModel = _modelDal.Update(modelToUpdate!); // 0x123123

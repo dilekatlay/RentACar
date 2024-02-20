@@ -1,4 +1,5 @@
-﻿using DataAccess.Concrete.EntityFramework.Contexts;
+﻿using Core.Entities;
+using DataAccess.Concrete.EntityFramework.Contexts;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,7 +17,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<Transmission> Transmissions { get; set; }
         public DbSet<Model> Models { get; set; }
         public DbSet<Car> Cars { get; set; }
-        public DbSet<Users> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Customers> Customers { get; set; }
         public DbSet<IndividualCustomer> IndividualCustomers { get; set; }
         public DbSet<CorporateCustomer> CorporateCustomers { get; set; }
@@ -25,10 +26,25 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public RentACarContext(DbContextOptions dbContextOptions) 
             : base(dbContextOptions) { }
 
-       
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // modelBuilder.Entity<Brand>().HasKey(i=> i.Id); // EF Core Naming Convention BrandId
+            modelBuilder.Entity<Brand>(e =>
+            {
+                e.HasKey(i => i.Id);
+                e.Property(i => i.Premium).HasDefaultValue(true);
+            });
+            base.OnModelCreating(modelBuilder); // Normalde yaptığı işlemleri sürdürür.
+        }
 
     }
 
 
+
+    // Database güncellemek için add-migration sonra update migration
+    // Son değişikliği geri almak için update-database migration adı sonra remove migration
+    // Update-Database migrationIsmi
+    // Remove-Migration
 }
 

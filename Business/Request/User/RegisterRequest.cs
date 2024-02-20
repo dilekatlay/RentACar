@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Dtos.Users
+namespace Business.Request.User
 {
-    public class UsersListItemDto
+    public class RegisterRequest
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
     }

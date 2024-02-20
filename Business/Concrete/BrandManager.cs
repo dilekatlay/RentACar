@@ -15,7 +15,8 @@ namespace Business.Concrete
 {
     public class BrandManager : IBrandService
     {
-        private readonly IBrandDal _brandDal;
+        private readonly IBrandDal _brandDal; // Bir entity service'i kendi entitysi dışında hiçbir entity'nin Dal'ını injekte etmemelidir.
+        // private readonly IModelDal _modelDal;
         private readonly BrandBusinessRules _brandBusinessRules;
         private IMapper _mapper;
 
@@ -31,6 +32,7 @@ namespace Business.Concrete
             ValidationTool.Validate(new AddModelRequestValidator(), request);
             // İş Kuralları
             _brandBusinessRules.CheckIfBrandNameNotExists(request.Name);
+            //Authentication-Authorization
             // Validation
             // Yetki kontrolü
             // Cache
@@ -44,10 +46,15 @@ namespace Business.Concrete
             return response;
         }
 
+        public Brand? GetById(int id)
+        {
+            return _brandDal.Get(i => i.Id == id);
+        }
+
         public DeleteBrandResponse Delete(DeleteBrandRequest request)
         {
             Brand? brandToDelete = _brandDal.Get(predicate: brand => brand.Id == request.Id); // 0x123123
-            _brandBusinessRules.CheckIfBrandExists(brandToDelete); // 0x123123
+            //_brandBusinessRules.CheckIfBrandExists(brandToDelete); // 0x123123
 
             Brand deletedBrand = _brandDal.Delete(brandToDelete!); // 0x123123
 
@@ -62,7 +69,7 @@ namespace Business.Concrete
         public GetBrandByIdResponse GetById(GetBrandByIdRequest request)
         {
             Brand? brand = _brandDal.Get(predicate: brand => brand.Id == request.Id);
-            _brandBusinessRules.CheckIfBrandExists(brand);
+            //_brandBusinessRules.CheckIfBrandExists(brand);
 
             var response = _mapper.Map<GetBrandByIdResponse>(brand);
             return response;
@@ -86,7 +93,7 @@ namespace Business.Concrete
         public UpdateBrandResponse Update(UpdateBrandRequest request)
         {
             Brand? brandToUpdate = _brandDal.Get(predicate: brand => brand.Id == request.Id); // 0x123123
-            _brandBusinessRules.CheckIfBrandExists(brandToUpdate);
+           // _brandBusinessRules.CheckIfBrandExists(brandToUpdate);
 
             brandToUpdate = _mapper.Map(request, brandToUpdate); // 0x123123
             Brand updatedBrand = _brandDal.Update(brandToUpdate!); // 0x123123

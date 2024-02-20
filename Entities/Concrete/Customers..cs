@@ -17,7 +17,7 @@ namespace Entities.Concrete
         }
 
         public int UsersId { get; set; }
-        public Users? Users { get; set; } = null;
+        public User? Users { get; set; } = null;
         public IndividualCustomer? IndividualCustomers { get; set; } = null;
         public CorporateCustomer? CorporateCustomers { get; set; } = null;
     }

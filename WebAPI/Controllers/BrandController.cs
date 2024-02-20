@@ -42,14 +42,26 @@ public class BrandsController : ControllerBase
     [HttpPost] // POST http://localhost:5245/api/models
     public ActionResult<AddBrandResponse> Add(AddBrandRequest request)
     {
-        AddBrandResponse response = _brandService.Add(request);
-        return CreatedAtAction( // 201 Created
-            actionName: nameof(GetById),
-            routeValues: new { Id = response.Id }, // Anonymous object
-                                                   // Response Header: Location=http://localhost:5245/api/models/1
+        try
+        {
+            AddBrandResponse response = _brandService.Add(request);
 
-            value: response // Response Body: JSON
-        );
+            //return response; // 200 OK
+            return CreatedAtAction(nameof(GetList), response); // 201 Created
+        }
+        catch (Core.CrossCuttingConcerns.Exceptions.BusinessException exception)
+        {
+            return BadRequest(
+                new Core.CrossCuttingConcerns.Exceptions.BusinessProblemDetails()
+                {
+                    Title = "Business Exception",
+                    Status = StatusCodes.Status400BadRequest,
+                    Detail = exception.Message,
+                    Instance = HttpContext.Request.Path
+                }
+            );
+            // 400 Bad Request
+        }
     }
 
     [HttpPut("{Id}")] // PUT http://localhost:5245/api/models/1

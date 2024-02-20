@@ -20,11 +20,11 @@ namespace Business.BusinessRules
             }
         }
 
-        public void CheckIfBrandExists(Brand? brand)
-        {
-            if (brand is null)
-                throw new NotFoundException("Brand not found.");
-        }
+        //public void CheckIfBrandExists(Brand? brand)
+        //{
+        //    if (brand is null)
+        //        throw new NotFoundException("Brand not found.");
+        //}
 
         //public Brand FindBrandId(int id)
         //{

@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess;
+using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Contexts;
 using Entities.Concrete;
@@ -6,57 +7,11 @@ using System.Linq;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCarDal : ICarDal
+   public class EfCarDal : EfEntityRepositoryBase<Car, int, RentACarContext>, ICarDal
     {
-        private readonly RentACarContext _context;
-        public EfCarDal(RentACarContext context)
+        public EfCarDal(RentACarContext context) : base(context)
         {
-            _context = context;
+
         }
-        public Car Add(Car entity)
-        {
-            entity.CreatedAt = DateTime.UtcNow;
-            _context.Cars.Add(entity);
-            _context.SaveChanges();
-            return entity;
-        }
-
-        public Car Delete(Car entity, bool isSoftDelete = true)
-        {
-            entity.DeletedAt = DateTime.UtcNow;
-            if (!isSoftDelete)
-
-                _context.Cars.Remove(entity);
-
-            _context.SaveChanges();
-
-            return entity;
-        }
-
-        public Car? Get(Func<Car, bool> predicate)
-        {
-            Car? car = _context.Cars.FirstOrDefault(predicate);
-
-            return car;
-        }
-
-
-        public IList<Car> GetList(Func<Car, bool> predicate)
-        {
-            IQueryable<Car> query = _context.Set<Car>();
-            if (predicate != null)
-                query = query.Where(predicate).AsQueryable();
-            return query.ToList();
-        }
-
-        public Car Update(Car entity)
-        {
-            entity.UpdateAt = DateTime.UtcNow;
-            _context.Cars.Update(entity);
-            _context.SaveChanges();
-            return entity;
-        }
-
-       
     }
 }

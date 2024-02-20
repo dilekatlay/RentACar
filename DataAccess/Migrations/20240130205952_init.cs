@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
+    //Migration dosyalarına manuel değişiklik yapılmamalı!!!
     /// <inheritdoc />
     public partial class init : Migration
     {

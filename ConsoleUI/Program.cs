@@ -591,7 +591,7 @@ Console.WriteLine("-------");
 //entityRepository.UpdateEntity(student);
 //entityRepository.UpdateEntity(instructor);
 
-IUserDal userDal = new SqlDbUserDal();  //new InMemoryUserDal();
+ConsoleUI.IUserDal userDal = new SqlDbUserDal();  //new InMemoryUserDal();
 // Dependency Injection // IoC
 
 userDal.Add( user );

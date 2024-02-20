@@ -1,13 +1,14 @@
 ﻿using Core.DataAccess.EntityFramework;
+using Core.Entities;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Contexts;
 using Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework;
 
-public class EfIndividualCustomerDal : EfEntityRepositoryBase<IndividualCustomer, int, RentACarContext>, IIndividualCustomerDal
+public class EfUserDal : EfEntityRepositoryBase<User, int, RentACarContext>, IUserDal
 {
-    public EfIndividualCustomerDal(RentACarContext context) : base(context)
+    public EfUserDal(RentACarContext context) : base(context)
     {
     }
 }

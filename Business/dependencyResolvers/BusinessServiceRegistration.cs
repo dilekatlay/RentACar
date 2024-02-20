@@ -2,6 +2,7 @@
 using Business.Abstract;
 using Business.BusinessRules;
 using Business.Concrete;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.EntityFramework.Contexts;
@@ -21,6 +22,8 @@ public static class ServiceCollectionBusinessExtension
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddScoped<ITokenHelper, JwtTokenHelper>();
+
         services
             .AddScoped<IBrandService, BrandManager>()
             .AddScoped<IBrandDal, EfBrandDal>()
@@ -38,9 +41,9 @@ public static class ServiceCollectionBusinessExtension
             .AddScoped<ITransmissionDal, EfTransmissionDal>()
             .AddScoped<TransmissionBusinessRules>();
         services
-            .AddScoped<IUsersService, UsersManager>()
-            .AddScoped<IUsersDal, EfUsersDal>()
-            .AddScoped<UsersBusinessRules>();
+            .AddScoped<IUserService, UserManager>()
+            .AddScoped<IUserDal, EfUserDal>();
+        
         services
             .AddScoped<ICustomersService, CustomersManager>()
             .AddScoped<ICustomersDal, EfCustomersDal>()

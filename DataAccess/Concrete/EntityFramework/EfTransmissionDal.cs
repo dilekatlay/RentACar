@@ -1,59 +1,13 @@
-﻿using Core.DataAccess;
+﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Contexts;
 using Entities.Concrete;
-using System.Linq;
 
-namespace DataAccess.Concrete.EntityFramework
+namespace DataAccess.Concrete.EntityFramework;
+
+public class EfTransmissionDal : EfEntityRepositoryBase<Transmission, int, RentACarContext>, ITransmissionDal
 {
-    public class EfTransmissionDal : ITransmissionDal
+    public EfTransmissionDal(RentACarContext context) : base(context)
     {
-        private readonly RentACarContext _context;
-        public EfTransmissionDal(RentACarContext context)
-        {
-            _context = context;
-        }
-        public Transmission Add(Transmission entity)
-        {
-            entity.CreatedAt = DateTime.UtcNow;
-            _context.Transmissions.Add(entity);
-            _context.SaveChanges();
-            return entity;
-        }
-
-        public Transmission Delete(Transmission entity, bool isSoftDelete = true)
-        {
-            entity.DeletedAt = DateTime.UtcNow;
-            if (!isSoftDelete)
-
-                _context.Transmissions.Remove(entity);
-
-            _context.SaveChanges();
-
-            return entity;
-        }
-
-        public Transmission? Get(Func<Transmission, bool> predicate)
-        {
-            Transmission? transmission = _context.Transmissions.FirstOrDefault(predicate);
-
-            return transmission;
-        }
-
-        public IList<Transmission> GetList(Func<Transmission, bool>? predicate = null)
-        {
-            IQueryable<Transmission> query = _context.Set<Transmission>();
-            if (predicate != null)
-                query = query.Where(predicate).AsQueryable();
-            return query.ToList();
-        }
-
-        public Transmission Update(Transmission entity)
-        {
-            entity.UpdateAt = DateTime.UtcNow;
-            _context.Transmissions.Update(entity);
-            _context.SaveChanges();
-            return entity;
-        }
     }
 }
