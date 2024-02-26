@@ -21,11 +21,16 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<Customers> Customers { get; set; }
         public DbSet<IndividualCustomer> IndividualCustomers { get; set; }
         public DbSet<CorporateCustomer> CorporateCustomers { get; set; }
+        public DbSet<OperationClaim>   OperationClaims { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
 
         public RentACarContext(DbContextOptions dbContextOptions) 
             : base(dbContextOptions) { }
 
+        public RentACarContext()
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -42,8 +42,9 @@ public static class ServiceCollectionBusinessExtension
             .AddScoped<TransmissionBusinessRules>();
         services
             .AddScoped<IUserService, UserManager>()
-            .AddScoped<IUserDal, EfUserDal>();
-        
+            .AddScoped<IUserDal, EfUserDal>()
+            .AddScoped<IAuthService, AuthManager>();
+
         services
             .AddScoped<ICustomersService, CustomersManager>()
             .AddScoped<ICustomersDal, EfCustomersDal>()

@@ -1,7 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Request.User;
 using Core.Utilities.Security.JWT;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -30,4 +29,3 @@ namespace WebAPI.Controllers
         }
     }
 }
-// 6:50

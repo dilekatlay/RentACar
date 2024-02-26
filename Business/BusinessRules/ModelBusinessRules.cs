@@ -16,6 +16,12 @@ public class ModelBusinessRules
         _brandService = brandService;
     }
 
+    public Model FindBrandId(int id)
+    {
+        Model model = _modelDal.GetList().SingleOrDefault(b => b.Id == id);
+        return model;
+    }
+
     public void CheckIfModelNameExists(string name)
     {
         bool isNameExists = _modelDal.Get(m => m.Name == name) != null;

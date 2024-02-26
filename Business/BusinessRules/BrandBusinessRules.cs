@@ -11,26 +11,28 @@ namespace Business.BusinessRules
         {
             _brandDal = brandDal;
         }
-        public void CheckIfBrandNameNotExists(string brandName)
+        public void CheckIfBrandNameExists(string brandName)
         {
             bool isExists = _brandDal.Get(brand => brand.Name == brandName) is not null;
+            // bool isExists = _brandDal.GetList().Any(b => b.Name == brandName);
+
             if (isExists)
             {
                 throw new BusinessException("Brand already exists.");
             }
+
         }
 
-        //public void CheckIfBrandExists(Brand? brand)
-        //{
-        //    if (brand is null)
-        //        throw new NotFoundException("Brand not found.");
-        //}
-
-        //public Brand FindBrandId(int id)
-        //{
-        //    Brand brand = _brandDal.GetList().SingleOrDefault(b => b.Id == id);
-        //    return brand;
-        //}
+        public Brand FindBrandId(int id)
+        {
+            Brand brand = _brandDal.GetList().SingleOrDefault(b => b.Id == id);
+            return brand;
+        }
+        public void CheckIfBrandExists(Brand? brand)
+        {
+            if (brand is null)
+                throw new NotFoundException("Brand not found.");
+        }
 
 
     }

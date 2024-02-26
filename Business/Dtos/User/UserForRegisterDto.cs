@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Utilities.Security.JWT
+namespace Business.Dtos.User
 {
-    public interface ITokenHelper
+    public class UserForRegisterDto
     {
-        AccessToken CreateToken(User users, List<OperationClaim> operationClaims);
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }
